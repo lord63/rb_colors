@@ -67,10 +67,10 @@ module Colors
 
         def to_s
             values = instance_variables.map {|var| instance_variable_get var}
-            properties = [
-                "%s: %s" % instance_variables.zip(values)
-            ]
-            "<%s %s>" % [self, properties.join(', ')]
+            properties = instance_variables.zip(values).map do |variable, value|
+                "#{variable}: #{value}"
+            end
+            "<%s %s>" % [self.class, properties.join(', ')]
         end
     end
 
