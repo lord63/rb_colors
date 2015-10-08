@@ -115,11 +115,11 @@ module Colors
         end
 
         def rgb
-            RGBColor.new(*(@colors.map {|c| c.to_i(16)})).to_s
+            RGBColor.new(*(@color.map {|c| c.to_i(16)})).to_s
         end
 
         def hsv
-            self.rgb.hsv.to_s
+            RGBColor.new(*(@color.map {|c| c.to_i(16)})).hsv.to_s
         end
 
         def hex
