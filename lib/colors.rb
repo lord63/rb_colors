@@ -50,7 +50,7 @@ end
 module Colors
     class Color
         def hex
-            HexColor.new("%02x%02x%02x" % self.rgb)
+            HexColor.new("%02x%02x%02x" % @color)
         end
 
         def rgb
@@ -59,10 +59,6 @@ module Colors
 
         def hsv
             raise NoMethodError
-        end
-
-        def size
-            @color.size
         end
 
         def to_s
@@ -78,14 +74,14 @@ module Colors
         attr_reader :hue, :saturation, :value
 
         def initialize(h=0, s=0, v=0)
-            raise ArgumentError "Saturation has to be less than 1" if s >1
-            raise ArgumentError "Value has to be less than 1" if v > 1
+            raise ArgumentError, "Saturation has to be less than 1" if s >1
+            raise ArgumentError, "Value has to be less than 1" if v > 1
             h = h - h.to_i if h >= 1   # Pardon???
             @hue, @saturation, @value = @color = [h, s, v]
         end
 
         def rgb
-            RGBColor.new(*(Colorsys.hsv_to_rgb(*@color).each {|c| c * 255})).to_s
+            RGBColor.new(*(Colorsys.hsv_to_rgb(*@color).map {|c| c * 255})).to_s
         end
 
         def hsv
@@ -98,7 +94,7 @@ module Colors
 
         def initialize(r=0, g=0, b=0)
             @red, @green, @blue = @color = [r, g, b]
-            @color.each { |c| raise ArgumentError "Color values must be between 0 and 255." if c < 0 || c > 255 }
+            @color.each { |c| raise ArgumentError, "Color values must be between 0 and 255." if c < 0 || c > 255 }
         end
 
         def rgb
@@ -106,15 +102,15 @@ module Colors
         end
 
         def hsv
-            HSVColor.new(*(Colorsys.rgb_to_hsv(@color.each {|c| c / 255.0}))).to_s
+            HSVColor.new(*(Colorsys.rgb_to_hsv(*(@color.map {|c| c / 255.0})))).to_s
         end
     end
 
 
     class HexColor < RGBColor
         def initialize(hex='000000')
-            raise ArgumentError "Hex color must be 6 digits." unless hex.size = 6
-            raise ArgumentError "Not a valid hex number." if hex.downcase.to_set.subset? "0123456789abcdef".chars.to_set
+            raise ArgumentError, "Hex color must be 6 digits." unless hex.size == 6
+            raise ArgumentError, "Not a valid hex number." unless hex.chars.map(&:downcase).to_set.subset? "0123456789abcdef".chars.to_set
             @color = hex.chars.each_slice(2).map(&:join)
         end
 
