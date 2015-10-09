@@ -111,7 +111,7 @@ module Colors
         def initialize(hex='000000')
             raise ArgumentError, "Hex color must be 6 digits." unless hex.size == 6
             raise ArgumentError, "Not a valid hex number." unless hex.chars.map(&:downcase).to_set.subset? "0123456789abcdef".chars.to_set
-            @color = hex.chars.each_slice(2).map(&:join)
+            @red, @green, @blue = @color = hex.chars.each_slice(2).map(&:join)
         end
 
         def rgb
