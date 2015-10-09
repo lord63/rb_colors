@@ -130,4 +130,17 @@ module Colors
             '%s%s%s' % @color
         end
     end
+
+    class ColorWheel
+        def initialize(start=0)
+            @phase = if start>1 then start-1 else start end
+        end
+
+        def next
+            shift = Random.rand * 0.1 + 0.1
+            @phase += shift
+            @phase = if @phase>1 then @phase-1 else @phase end
+            HSVColor.new(@phase, 1, 0.8)
+        end
+    end
 end
