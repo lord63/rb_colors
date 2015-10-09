@@ -50,7 +50,7 @@ end
 module Colors
     class Color
         def hex
-            HexColor.new("%02x%02x%02x" % @color)
+            HexColor.new("%02x%02x%02x" % self.rgb.to_a)
         end
 
         def rgb
@@ -67,6 +67,10 @@ module Colors
                 "#{variable}: #{value}" unless variable.to_s == "@color"
             end
             "<%s %s>" % [self.class, properties.compact.join(', ')]
+        end
+
+        def to_a
+            @color
         end
     end
 
@@ -141,6 +145,12 @@ module Colors
             @phase += shift
             @phase = if @phase>1 then @phase-1 else @phase end
             HSVColor.new(@phase, 1, 0.8)
+        end
+    end
+
+    class RandomColor
+        def self.rand
+            HSVColor.new(Random.rand, Random.rand, Random.rand)
         end
     end
 end
