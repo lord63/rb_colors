@@ -126,7 +126,7 @@ module Colors
             self
         end
 
-        def to_s
+        def to_str
             '%s%s%s' % @color
         end
     end
