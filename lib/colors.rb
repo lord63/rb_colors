@@ -64,9 +64,9 @@ module Colors
         def to_s
             values = instance_variables.map {|var| instance_variable_get var}
             properties = instance_variables.zip(values).map do |variable, value|
-                "#{variable}: #{value}"
+                "#{variable}: #{value}" unless variable.to_s == "@color"
             end
-            "<%s %s>" % [self.class, properties.join(', ')]
+            "<%s %s>" % [self.class, properties.compact.join(', ')]
         end
     end
 
