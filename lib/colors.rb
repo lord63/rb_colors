@@ -81,11 +81,11 @@ module Colors
         end
 
         def rgb
-            RGBColor.new(*(Colorsys.hsv_to_rgb(*@color).map {|c| c * 255})).to_s
+            RGBColor.new(*(Colorsys.hsv_to_rgb(*@color).map {|c| c * 255}))
         end
 
         def hsv
-            to_s
+            self
         end
     end
 
@@ -98,11 +98,11 @@ module Colors
         end
 
         def rgb
-            to_s
+            self
         end
 
         def hsv
-            HSVColor.new(*(Colorsys.rgb_to_hsv(*(@color.map {|c| c / 255.0})))).to_s
+            HSVColor.new(*(Colorsys.rgb_to_hsv(*(@color.map {|c| c / 255.0}))))
         end
     end
 
@@ -115,15 +115,15 @@ module Colors
         end
 
         def rgb
-            RGBColor.new(*(@color.map {|c| c.to_i(16)})).to_s
+            RGBColor.new(*(@color.map {|c| c.to_i(16)}))
         end
 
         def hsv
-            RGBColor.new(*(@color.map {|c| c.to_i(16)})).hsv.to_s
+            RGBColor.new(*(@color.map {|c| c.to_i(16)})).hsv
         end
 
         def hex
-            to_s
+            self
         end
 
         def to_s
