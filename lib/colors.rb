@@ -64,13 +64,13 @@ module Colors
         def to_s
             values = instance_variables.map {|var| instance_variable_get var}
             properties = instance_variables.zip(values).map do |variable, value|
-                "#{variable}: #{value}" unless variable.to_s == "@color"
+                "#{variable}: #{value}" unless variable.to_s == self.to_a
             end
             "<%s %s>" % [self.class, properties.compact.join(', ')]
         end
 
         def to_a
-            @color
+            instance_variables.map {|var| instance_variable_get var}
         end
     end
 
@@ -81,11 +81,11 @@ module Colors
             raise ArgumentError, "Saturation has to be less than 1" if s >1
             raise ArgumentError, "Value has to be less than 1" if v > 1
             h = h - h.to_i if h >= 1   # Pardon???
-            @hue, @saturation, @value = @color = [h, s, v]
+            @hue, @saturation, @value = [h, s, v]
         end
 
         def rgb
-            RGBColor.new(*(Colorsys.hsv_to_rgb(*@color).map {|c| c * 255}))
+            RGBColor.new(*(Colorsys.hsv_to_rgb(*self.to_a).map {|c| c * 255}))
         end
 
         def hsv
@@ -97,8 +97,8 @@ module Colors
         attr_reader :red, :green, :blue
 
         def initialize(r=0, g=0, b=0)
-            @red, @green, @blue = @color = [r, g, b]
-            @color.each { |c| raise ArgumentError, "Color values must be between 0 and 255." if c < 0 || c > 255 }
+            @red, @green, @blue = [r, g, b]
+            self.to_a.each { |c| raise ArgumentError, "Color values must be between 0 and 255." if c < 0 || c > 255 }
         end
 
         def rgb
@@ -106,7 +106,7 @@ module Colors
         end
 
         def hsv
-            HSVColor.new(*(Colorsys.rgb_to_hsv(*(@color.map {|c| c / 255.0}))))
+            HSVColor.new(*(Colorsys.rgb_to_hsv(*(self.to_a.map {|c| c / 255.0}))))
         end
     end
 
@@ -115,15 +115,15 @@ module Colors
         def initialize(hex='000000')
             raise ArgumentError, "Hex color must be 6 digits." unless hex.size == 6
             raise ArgumentError, "Not a valid hex number." unless hex.chars.map(&:downcase).to_set.subset? "0123456789abcdef".chars.to_set
-            @red, @green, @blue = @color = hex.chars.each_slice(2).map(&:join)
+            @red, @green, @blue = hex.chars.each_slice(2).map(&:join)
         end
 
         def rgb
-            RGBColor.new(*(@color.map {|c| c.to_i(16)}))
+            RGBColor.new(*(self.to_a.map {|c| c.to_i(16)}))
         end
 
         def hsv
-            RGBColor.new(*(@color.map {|c| c.to_i(16)})).hsv
+            RGBColor.new(*(self.to_a.map {|c| c.to_i(16)})).hsv
         end
 
         def hex
@@ -131,7 +131,7 @@ module Colors
         end
 
         def to_str
-            '%s%s%s' % @color
+            '%s%s%s' % self.to_a
         end
     end
 
