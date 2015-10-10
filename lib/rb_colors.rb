@@ -1,3 +1,4 @@
+require "rb_colors/version"
 require 'set'
 
 module Colorsys
@@ -47,7 +48,7 @@ module Colorsys
 end
 
 
-module Colors
+module RbColors
     class Color
         def hex
             HexColor.new("%02x%02x%02x" % self.rgb.to_a)
