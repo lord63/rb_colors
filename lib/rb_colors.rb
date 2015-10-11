@@ -115,8 +115,8 @@ module RbColors
   class HexColor < RGBColor
     def initialize(hex='000000')
       raise ArgumentError, "Hex color must be 6 digits." unless hex.size == 6
-      raise ArgumentError, "Not a valid hex number." unless hex.chars.map(&:downcase).to_set.subset? "0123456789abcdef".chars.to_set
-      @red, @green, @blue = hex.chars.each_slice(2).map(&:join)
+      raise ArgumentError, "Not a valid hex number." unless /\h{6}/ =~ hex
+      @red, @green, @blue = hex.scan /../
     end
 
     def rgb
@@ -138,7 +138,7 @@ module RbColors
 
   class ColorWheel
     def initialize(start=0)
-      @phase = if start>1 then start-1 else start end
+      @phase = start>1 ? start-1 : start
     end
 
     def next
@@ -151,7 +151,7 @@ module RbColors
 
   class RandomColor
     def self.rand
-      HSVColor.new(Random.rand, Random.rand, Random.rand)
+      HSVColor.new *3.times.map { Random.rand }
     end
   end
 end
