@@ -51,7 +51,7 @@ module RbColors
 
   class Color
     def hex
-      HexColor.new("%02x%02x%02x" % self.rgb.to_a)
+      HexColor.new("%02x%02x%02x" % rgb.to_a)
     end
 
     def rgb
@@ -86,7 +86,7 @@ module RbColors
     end
 
     def rgb
-      RGBColor.new(*(Colorsys.hsv_to_rgb(*self.to_a).map {|c| c * 255}))
+      RGBColor.new(*(Colorsys.hsv_to_rgb(*to_a).map {|c| c * 255}))
     end
 
     def hsv
@@ -99,7 +99,7 @@ module RbColors
 
     def initialize(r=0, g=0, b=0)
       @red, @green, @blue = [r, g, b]
-      self.to_a.each { |c| raise ArgumentError, "Color values must be between 0 and 255." if c < 0 || c > 255 }
+      to_a.each { |c| raise ArgumentError, "Color values must be between 0 and 255." if c < 0 || c > 255 }
     end
 
     def rgb
@@ -107,7 +107,7 @@ module RbColors
     end
 
     def hsv
-      HSVColor.new(*(Colorsys.rgb_to_hsv(*(self.to_a.map {|c| c / 255.0}))))
+      HSVColor.new(*(Colorsys.rgb_to_hsv(*(to_a.map {|c| c / 255.0}))))
     end
   end
 
@@ -120,11 +120,11 @@ module RbColors
     end
 
     def rgb
-      RGBColor.new(*(self.to_a.map {|c| c.to_i(16)}))
+      RGBColor.new(*(to_a.map {|c| c.to_i(16)}))
     end
 
     def hsv
-      RGBColor.new(*(self.to_a.map {|c| c.to_i(16)})).hsv
+      RGBColor.new(*(to_a.map {|c| c.to_i(16)})).hsv
     end
 
     def hex
@@ -132,7 +132,7 @@ module RbColors
     end
 
     def to_str
-      '%s%s%s' % self.to_a
+      '%s%s%s' % to_a
     end
   end
 
