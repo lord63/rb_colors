@@ -40,4 +40,18 @@ class RbColorsTest < Minitest::Test
     assert "<RbColors::HSVColor @hue: 0.0, @saturation: 0.0, @value: 0.39215686274509803>", hex_color.hsv.to_s
     assert "<RbColors::HexColor @red: 64, @green: 64, @blue: 64>", hex_color.hex.to_s
   end
+
+  def test_color_wheel
+    color = ::RbColors::ColorWheel.new.next
+    color_array = color.to_a
+    assert color_array[0] >= 0 and color_array[0] < 1
+    assert color_array[1, 2], [1, 0.8]
+    assert color.class, ::RbColors::HSVColor
+  end
+
+  def test_random_color
+    color = ::RbColors::RandomColor.rand
+    color.to_a.map {|c| assert c>=0 and c<1}
+    assert color.class, ::RbColors::HSVColor
+  end
 end
