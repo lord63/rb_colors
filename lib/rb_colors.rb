@@ -1,54 +1,54 @@
 require "rb_colors/version"
-require 'set'
-
-module Colorsys
-  def self.rgb_to_hsv(r, g, b)
-    max_color = [r, g, b].max
-    min_color = [r, g, b].min
-    v = max_color
-    return [0.0, 0.0, v] if max_color == min_color
-    s = (max_color - min_color) / max_color
-    rc = (max_color - r) / (max_color - min_color)
-    gc = (max_color - g) / (max_color - min_color)
-    bc = (max_color - b) / (max_color - min_color)
-    if r == max_color
-      h = bc - gc
-    elsif g == max_color
-      h = 2.0 + rc - bc
-    else
-      h = 4.0 + gc - rc
-    end
-    h = (h / 6.0) % 1.0
-    return [h, s, v]
-  end
-
-  def self.hsv_to_rgb(h, s, v)
-    return [v, v, v] if s == 0.0
-    i = (h * 6.0).to_i
-    f = (h * 6.0) - i
-    p = v * (1.0 - s)
-    q = v * (1.0 - s*f)
-    t = v * (1.0 - s*(1.0 - f))
-    i = i % 6
-    case i
-    when 0
-      [v, t, p]
-    when 1
-      [q, v, p]
-    when 2
-      [p, v, t]
-    when 3
-      [p, q, v]
-    when 4
-      [t, p, v]
-    when 5
-      [v, p, q]
-    end
-  end
-end
+require "set"
 
 
 module RbColors
+  module Colorsys
+    def self.rgb_to_hsv(r, g, b)
+      max_color = [r, g, b].max
+      min_color = [r, g, b].min
+      v = max_color
+      return [0.0, 0.0, v] if max_color == min_color
+      s = (max_color - min_color) / max_color
+      rc = (max_color - r) / (max_color - min_color)
+      gc = (max_color - g) / (max_color - min_color)
+      bc = (max_color - b) / (max_color - min_color)
+      if r == max_color
+        h = bc - gc
+      elsif g == max_color
+        h = 2.0 + rc - bc
+      else
+        h = 4.0 + gc - rc
+      end
+      h = (h / 6.0) % 1.0
+      return [h, s, v]
+    end
+
+    def self.hsv_to_rgb(h, s, v)
+      return [v, v, v] if s == 0.0
+      i = (h * 6.0).to_i
+      f = (h * 6.0) - i
+      p = v * (1.0 - s)
+      q = v * (1.0 - s*f)
+      t = v * (1.0 - s*(1.0 - f))
+      i = i % 6
+      case i
+      when 0
+        [v, t, p]
+      when 1
+        [q, v, p]
+      when 2
+        [p, v, t]
+      when 3
+        [p, q, v]
+      when 4
+        [t, p, v]
+      when 5
+        [v, p, q]
+      end
+    end
+  end
+
   class Color
     def hex
       HexColor.new("%02x%02x%02x" % self.rgb.to_a)

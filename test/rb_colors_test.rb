@@ -6,11 +6,11 @@ class RbColorsTest < Minitest::Test
   end
 
   def test_rgb_to_hsv
-    assert [0.5, 0.5, 0.4], ::Colorsys.rgb_to_hsv(0.2, 0.4, 0.4)
+    assert [0.5, 0.5, 0.4], ::RbColors::Colorsys.rgb_to_hsv(0.2, 0.4, 0.4)
   end
 
   def test_hsv_to_rgb
-    assert [0.2, 0.4, 0.4], ::Colorsys.hsv_to_rgb(0.5, 0.5, 0.4)
+    assert [0.2, 0.4, 0.4], ::RbColors::Colorsys.hsv_to_rgb(0.5, 0.5, 0.4)
   end
 
   def test_rgb_color
