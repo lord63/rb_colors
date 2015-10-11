@@ -65,9 +65,9 @@ module RbColors
     def to_s
       values = instance_variables.map {|var| instance_variable_get var}
       properties = instance_variables.zip(values).map do |variable, value|
-        "#{variable}: #{value}" unless variable.to_s == self.to_a
+        "#{variable}: #{value}"
       end
-      "<%s %s>" % [self.class, properties.compact.join(', ')]
+      "<#{self.class} #{properties.join(', ')}>"
     end
 
     def to_a
