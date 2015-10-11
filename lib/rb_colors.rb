@@ -55,11 +55,11 @@ module RbColors
     end
 
     def rgb
-      raise NoMethodError
+      raise NotImplementedErrorr
     end
 
     def hsv
-      raise NoMethodError
+      raise NotImplementedError
     end
 
     def to_s
