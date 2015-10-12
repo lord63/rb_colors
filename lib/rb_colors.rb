@@ -73,6 +73,10 @@ module RbColors
     def to_a
       instance_variables.map {|var| instance_variable_get var}
     end
+
+    def ==(other)
+      rgb.to_a == other.rgb.to_a
+    end
   end
 
   class HSVColor < Color

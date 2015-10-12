@@ -54,4 +54,12 @@ class RbColorsTest < Minitest::Test
     color.to_a.map {|c| assert c>=0 and c<1}
     assert color.class, ::RbColors::HSVColor
   end
+
+  def test_compare_color_equality
+    rgb_color = ::RbColors::RGBColor.new(100, 100, 100)
+    hsv_color = ::RbColors::HSVColor.new(0, 1, 1)
+    hex_color = ::RbColors::HexColor.new('646464')
+    assert_equal rgb_color, hex_color
+    refute_equal hsv_color, rgb_color
+  end
 end
