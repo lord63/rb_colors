@@ -9,9 +9,7 @@ module RbColors
           green: [0, 255, 0],
           blue: [0, 0, 255]
         }
-        if colors.keys.include? name
-          RGBColor.new(*colors[name])
-        end
+        RGBColor.new(*colors[name]) if colors.keys.include? name
       end
     end
   end
