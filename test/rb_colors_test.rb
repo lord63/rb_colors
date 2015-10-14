@@ -79,4 +79,22 @@ class RbColorsTest < Minitest::Test
     assert_equal @rgb_color, @hex_color
     refute_equal @hsv_color, @rgb_color
   end
+
+  def test_color_add
+    assert_equal(@rgb_color + @hsv_color,
+                 ::RbColors::RGBColor.new(255, 100, 100))
+  end
+
+  def test_color_subtract
+    assert_equal @rgb_color - @hex_color, ::RbColors::RGBColor.new(0, 0, 0)
+  end
+
+  def test_color_mutiply
+    assert_equal((@rgb_color * @hsv_color).hex,
+                 ::RbColors::HexColor.new('640000'))
+  end
+
+  def test_color_divide
+    assert_equal @rgb_color / @hex_color, ::RbColors::RGBColor.new(1, 1, 1)
+  end
 end

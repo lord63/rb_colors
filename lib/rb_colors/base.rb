@@ -58,6 +58,31 @@ module RbColors
       raise NotImplementedError
     end
 
+    def +(other)
+      self_rgb = rgb.to_a
+      other_rgb = other.rgb.to_a
+      RGBColor.new(*self_rgb.zip(other_rgb).map { |i, j| [255, i + j].min })
+    end
+
+    def -(other)
+      self_rgb = rgb.to_a
+      other_rgb = other.rgb.to_a
+      RGBColor.new(*self_rgb.zip(other_rgb).map { |i, j| [0, i - j].max })
+    end
+
+    def *(other)
+      self_rgb = rgb.to_a
+      other_rgb = other.rgb.to_a
+      RGBColor.new(*self_rgb.zip(other_rgb).map { |i, j| i * j / 255.0 })
+    end
+
+    def /(other)
+      self_rgb = rgb.to_a
+      other_rgb = other.rgb.to_a
+      raise ZeroDivisionError, "0 in #{other}" if other_rgb.include? 0
+      RGBColor.new(*self_rgb.zip(other_rgb).map { |i, j| i / j.to_f })
+    end
+
     def to_s
       values = instance_variables.map { |var| instance_variable_get var }
       properties = instance_variables.zip(values).map do |variable, value|
