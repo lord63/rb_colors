@@ -97,4 +97,23 @@ class RbColorsTest < Minitest::Test
   def test_color_divide
     assert_equal @rgb_color / @hex_color, ::RbColors::RGBColor.new(1, 1, 1)
   end
+
+  def test_color_screen
+    assert(@hex_color.screen(@rgb_color).hex,
+           ::RbColors::HexColor.new('a0a0a0'))
+  end
+
+  def test_color_difference
+    assert(@hex_color.difference(@rgb_color).hex,
+           ::RbColors::HexColor.new('000000'))
+  end
+
+  def test_color_overlay
+    assert(@hex_color.overlay(@rgb_color).hex,
+           ::RbColors::HexColor.new('7b7b7b'))
+  end
+
+  def test_color_invert
+    assert_equal @hex_color.invert, ::RbColors::RGBColor.new(155, 155, 155)
+  end
 end

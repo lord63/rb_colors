@@ -58,6 +58,29 @@ module RbColors
       raise NotImplementedError
     end
 
+    def screen(other)
+      self_rgb = rgb.to_a
+      other_rgb = other.rgb.to_a
+      new_color = self_rgb.zip(other_rgb).map do |i, j|
+        255 - ((255 - i) * (255 - j) / 255.0)
+      end
+      RGBColor.new(*new_color)
+    end
+
+    def difference(other)
+      self_rgb = rgb.to_a
+      other_rgb = other.rgb.to_a
+      RGBColor.new(*self_rgb.zip(other_rgb).map { |i, j| (i - j).abs })
+    end
+
+    def overlay(other)
+      screen(self * other)
+    end
+
+    def invert
+      difference(RGBColor.new(255, 255, 255))
+    end
+
     def +(other)
       self_rgb = rgb.to_a
       other_rgb = other.rgb.to_a
