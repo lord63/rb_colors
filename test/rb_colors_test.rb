@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class RbColorsTest < Minitest::Test
+  def setup
+    @rgb_color = ::RbColors::RGBColor.new(100, 100, 100)
+    @hsv_color = ::RbColors::HSVColor.new(0, 1, 1)
+    @hex_color = ::RbColors::HexColor.new('646464')
+  end
+
   def test_that_it_has_a_version_number
     refute_nil ::RbColors::VERSION
   end
@@ -16,46 +22,43 @@ class RbColorsTest < Minitest::Test
   end
 
   def test_rgb_color
-    rgb_color = ::RbColors::RGBColor.new(100, 100, 100)
     assert_equal('<RbColors::RGBColor @red: 100, @green: 100, @blue: 100>',
-                 rgb_color.to_s)
-    assert_equal [100, 100, 100], rgb_color.to_a
+                 @rgb_color.to_s)
+    assert_equal [100, 100, 100], @rgb_color.to_a
     assert_equal('<RbColors::RGBColor @red: 100, @green: 100, @blue: 100>',
-                 rgb_color.rgb.to_s)
+                 @rgb_color.rgb.to_s)
     assert_equal(
       '<RbColors::HSVColor @hue: 0.0, @saturation: 0.0, ' \
       '@value: 0.39215686274509803>',
-      rgb_color.hsv.to_s)
+      @rgb_color.hsv.to_s)
     assert_equal('<RbColors::HexColor @red: 64, @green: 64, @blue: 64>',
-                 rgb_color.hex.to_s)
+                 @rgb_color.hex.to_s)
   end
 
   def test_hsv_color
-    hsv_color = ::RbColors::HSVColor.new(0, 1, 1)
     assert_equal('<RbColors::HSVColor @hue: 0, @saturation: 1, @value: 1>',
-                 hsv_color.to_s)
-    assert_equal [0, 1, 1], hsv_color.to_a
+                 @hsv_color.to_s)
+    assert_equal [0, 1, 1], @hsv_color.to_a
     assert_equal('<RbColors::RGBColor @red: 255, @green: 0.0, @blue: 0.0>',
-                 hsv_color.rgb.to_s)
+                 @hsv_color.rgb.to_s)
     assert_equal('<RbColors::HSVColor @hue: 0, @saturation: 1, @value: 1>',
-                 hsv_color.hsv.to_s)
+                 @hsv_color.hsv.to_s)
     assert_equal('<RbColors::HexColor @red: ff, @green: 00, @blue: 00>',
-                 hsv_color.hex.to_s)
+                 @hsv_color.hex.to_s)
   end
 
   def test_hex_color
-    hex_color = ::RbColors::HexColor.new('646464')
-    assert_equal '646464', hex_color.to_str
+    assert_equal '646464', @hex_color.to_str
     assert_equal('<RbColors::HexColor @red: 64, @green: 64, @blue: 64>',
-                 hex_color.to_s)
-    assert_equal ['64', '64', '64'], hex_color.to_a
+                 @hex_color.to_s)
+    assert_equal ['64', '64', '64'], @hex_color.to_a
     assert_equal('<RbColors::RGBColor @red: 100, @green: 100, @blue: 100>',
-                 hex_color.rgb.to_s)
+                 @hex_color.rgb.to_s)
     assert_equal('<RbColors::HSVColor @hue: 0.0, @saturation: 0.0, ' \
                  '@value: 0.39215686274509803>',
-                 hex_color.hsv.to_s)
+                 @hex_color.hsv.to_s)
     assert_equal('<RbColors::HexColor @red: 64, @green: 64, @blue: 64>',
-                 hex_color.hex.to_s)
+                 @hex_color.hex.to_s)
   end
 
   def test_color_wheel
@@ -73,10 +76,7 @@ class RbColorsTest < Minitest::Test
   end
 
   def test_compare_color_equality
-    rgb_color = ::RbColors::RGBColor.new(100, 100, 100)
-    hsv_color = ::RbColors::HSVColor.new(0, 1, 1)
-    hex_color = ::RbColors::HexColor.new('646464')
-    assert_equal rgb_color, hex_color
-    refute_equal hsv_color, rgb_color
+    assert_equal @rgb_color, @hex_color
+    refute_equal @hsv_color, @rgb_color
   end
 end
