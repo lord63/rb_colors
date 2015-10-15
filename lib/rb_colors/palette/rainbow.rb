@@ -2,6 +2,7 @@ require 'rb_colors/palette/base'
 
 module RbColors
   class Rainbow < ColorPalette
+    @cached_color = {}
     @colors = {
       RED: [255, 0, 0],
       ORANGE: [255, 165, 0],

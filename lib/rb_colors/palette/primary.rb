@@ -2,6 +2,7 @@ require 'rb_colors/palette/base'
 
 module RbColors
   class Primary < ColorPalette
+    @cached_color = {}
     @colors = {
       BLACK: [0, 0, 0],
       WHITE: [255, 255, 255],
