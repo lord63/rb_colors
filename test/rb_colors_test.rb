@@ -116,4 +116,32 @@ class RbColorsTest < Minitest::Test
   def test_color_invert
     assert_equal @hex_color.invert, ::RbColors::RGBColor.new(155, 155, 155)
   end
+
+  def each_palette_color(palette)
+    colors = palette.instance_eval { @colors.values }
+    constants = palette.constants
+    constants.zip(colors).map do |constant, color|
+      assert_equal(palette.const_get(constant),
+                   ::RbColors::RGBColor.new(*color))
+    end
+  end
+
+  def test_primary_color_palette
+    assert_equal ::RbColors::Primary.constants.size, 5
+    assert ::RbColors::Primary::GREEN.equal? ::RbColors::Primary::GREEN
+    refute_equal ::RbColors::Primary::GREEN, ::RbColors::Rainbow::GREEN
+    each_palette_color(::RbColors::Primary)
+  end
+
+  def test_raibow_color_palette
+    assert_equal ::RbColors::Rainbow.constants.size, 7
+    assert ::RbColors::Primary::RED.equal? ::RbColors::Primary::RED
+    each_palette_color(::RbColors::Rainbow)
+  end
+
+  def test_w3c_color_palette
+    assert_equal ::RbColors::W3C.constants.size, 147
+    assert ::RbColors::Primary::AQUA.equal? ::RbColors::Primary::AQUA
+    each_palette_color(::RbColors::W3C)
+  end
 end
