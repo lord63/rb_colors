@@ -1,3 +1,5 @@
 require 'rb_colors/version'
 require 'rb_colors/color'
 require 'rb_colors/palette/primary'
+require 'rb_colors/palette/rainbow'
+require 'rb_colors/palette/w3c'
