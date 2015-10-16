@@ -51,7 +51,7 @@ module RbColors
     end
 
     def rgb
-      raise NotImplementedErrorr
+      raise NotImplementedError
     end
 
     def hsv
