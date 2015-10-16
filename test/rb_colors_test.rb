@@ -79,8 +79,8 @@ class RbColorsTest < Minitest::Test
     end
 
     def test_compare_color_equality
-      assert_equal @rgb_color, @hex_color
-      refute_equal @hsv_color, @rgb_color
+      assert @rgb_color == @hex_color
+      assert @hsv_color != @rgb_color
     end
   end
 
@@ -106,18 +106,18 @@ class RbColorsTest < Minitest::Test
 
   class ColorBlendModesTest < RbColorsTest
     def test_color_screen
-      assert(::RbColors::HexColor.new('a0a0a0'),
-             @hex_color.screen(@rgb_color).hex)
+      assert_equal(::RbColors::HexColor.new('a0a0a0'),
+                   @hex_color.screen(@rgb_color).hex)
     end
 
     def test_color_difference
-      assert(::RbColors::HexColor.new('000000'),
-             @hex_color.difference(@rgb_color).hex)
+      assert_equal(::RbColors::HexColor.new('000000'),
+                   @hex_color.difference(@rgb_color).hex)
     end
 
     def test_color_overlay
-      assert(::RbColors::HexColor.new('7b7b7b'),
-             @hex_color.overlay(@rgb_color).hex)
+      assert_equal(::RbColors::HexColor.new('7b7b7b'),
+                   @hex_color.overlay(@rgb_color).hex)
     end
 
     def test_color_invert
@@ -137,20 +137,20 @@ class RbColorsTest < Minitest::Test
 
     def test_primary_color_palette
       assert_equal 5, ::RbColors::Primary.constants.size
-      assert ::RbColors::Primary::GREEN.equal? ::RbColors::Primary::GREEN
-      refute_equal ::RbColors::Primary::GREEN, ::RbColors::Rainbow::GREEN
+      assert_same ::RbColors::Primary::GREEN, ::RbColors::Primary::GREEN
+      assert ::RbColors::Primary::GREEN != ::RbColors::Rainbow::GREEN
       each_palette_color(::RbColors::Primary)
     end
 
     def test_raibow_color_palette
       assert_equal 7, ::RbColors::Rainbow.constants.size
-      assert ::RbColors::Primary::RED.equal? ::RbColors::Primary::RED
+      assert_same ::RbColors::Primary::RED, ::RbColors::Primary::RED
       each_palette_color(::RbColors::Rainbow)
     end
 
     def test_w3c_color_palette
       assert_equal 147, ::RbColors::W3C.constants.size
-      assert ::RbColors::Primary::AQUA.equal? ::RbColors::Primary::AQUA
+      assert_same ::RbColors::Primary::AQUA, ::RbColors::Primary::AQUA
       each_palette_color(::RbColors::W3C)
     end
   end
