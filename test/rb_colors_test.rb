@@ -126,15 +126,6 @@ class RbColorsTest < Minitest::Test
   end
 
   class ColorPaletteTest < RbColorsTest
-    def each_palette_color(palette)
-      colors = palette.instance_eval { @colors.values }
-      constants = palette.constants
-      constants.zip(colors).map do |constant, color|
-        assert_equal(palette.const_get(constant),
-                     ::RbColors::RGBColor.new(*color))
-      end
-    end
-
     def test_primary_color_palette
       assert_equal 5, ::RbColors::Primary.constants.size
       assert_same ::RbColors::Primary::GREEN, ::RbColors::Primary::GREEN
@@ -152,6 +143,17 @@ class RbColorsTest < Minitest::Test
       assert_equal 147, ::RbColors::W3C.constants.size
       assert_same ::RbColors::Primary::AQUA, ::RbColors::Primary::AQUA
       each_palette_color(::RbColors::W3C)
+    end
+
+    private
+
+    def each_palette_color(palette)
+      rgb_values = palette.instance_variable_get(:@colors).values
+      color_constants = palette.constants
+      color_constants.zip(rgb_values).each do |color_name, rgb_value|
+        assert_equal(RbColors::RGBColor.new(*rgb_value),
+                     palette.const_get(color_name))
+      end
     end
   end
 end
