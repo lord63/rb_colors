@@ -68,14 +68,14 @@ class RbColorsTest < Minitest::Test
       color = ::RbColors::ColorWheel.new.next
       color_array = color.to_a
       assert color_array[0] >= 0 && color_array[0] < 1
-      assert_equal color_array[1, 2], [1, 0.8]
-      assert_equal color.class, ::RbColors::HSVColor
+      assert_equal [1, 0.8], color_array[1, 2]
+      assert_equal ::RbColors::HSVColor, color.class
     end
 
     def test_random_color
       color = ::RbColors::RandomColor.rand
       color.to_a.map { |c| assert c >= 0 && c < 1 }
-      assert_equal color.class, ::RbColors::HSVColor
+      assert_equal ::RbColors::HSVColor, color.class
     end
 
     def test_compare_color_equality
@@ -86,42 +86,42 @@ class RbColorsTest < Minitest::Test
 
   class ColorArithmeticTest < RbColorsTest
     def test_color_add
-      assert_equal(@rgb_color + @hsv_color,
-                   ::RbColors::RGBColor.new(255, 100, 100))
+      assert_equal(::RbColors::RGBColor.new(255, 100, 100),
+                   @rgb_color + @hsv_color)
     end
 
     def test_color_subtract
-      assert_equal @rgb_color - @hex_color, ::RbColors::RGBColor.new(0, 0, 0)
+      assert_equal ::RbColors::RGBColor.new(0, 0, 0), @rgb_color - @hex_color
     end
 
     def test_color_mutiply
-      assert_equal((@rgb_color * @hsv_color).hex,
-                   ::RbColors::HexColor.new('640000'))
+      assert_equal(::RbColors::HexColor.new('640000'),
+                   (@rgb_color * @hsv_color).hex)
     end
 
     def test_color_divide
-      assert_equal @rgb_color / @hex_color, ::RbColors::RGBColor.new(1, 1, 1)
+      assert_equal ::RbColors::RGBColor.new(1, 1, 1), @rgb_color / @hex_color
     end
   end
 
   class ColorBlendModesTest < RbColorsTest
     def test_color_screen
-      assert(@hex_color.screen(@rgb_color).hex,
-             ::RbColors::HexColor.new('a0a0a0'))
+      assert(::RbColors::HexColor.new('a0a0a0'),
+             @hex_color.screen(@rgb_color).hex)
     end
 
     def test_color_difference
-      assert(@hex_color.difference(@rgb_color).hex,
-             ::RbColors::HexColor.new('000000'))
+      assert(::RbColors::HexColor.new('000000'),
+             @hex_color.difference(@rgb_color).hex)
     end
 
     def test_color_overlay
-      assert(@hex_color.overlay(@rgb_color).hex,
-             ::RbColors::HexColor.new('7b7b7b'))
+      assert(::RbColors::HexColor.new('7b7b7b'),
+             @hex_color.overlay(@rgb_color).hex)
     end
 
     def test_color_invert
-      assert_equal @hex_color.invert, ::RbColors::RGBColor.new(155, 155, 155)
+      assert_equal ::RbColors::RGBColor.new(155, 155, 155), @hex_color.invert
     end
   end
 
@@ -136,20 +136,20 @@ class RbColorsTest < Minitest::Test
     end
 
     def test_primary_color_palette
-      assert_equal ::RbColors::Primary.constants.size, 5
+      assert_equal 5, ::RbColors::Primary.constants.size
       assert ::RbColors::Primary::GREEN.equal? ::RbColors::Primary::GREEN
       refute_equal ::RbColors::Primary::GREEN, ::RbColors::Rainbow::GREEN
       each_palette_color(::RbColors::Primary)
     end
 
     def test_raibow_color_palette
-      assert_equal ::RbColors::Rainbow.constants.size, 7
+      assert_equal 7, ::RbColors::Rainbow.constants.size
       assert ::RbColors::Primary::RED.equal? ::RbColors::Primary::RED
       each_palette_color(::RbColors::Rainbow)
     end
 
     def test_w3c_color_palette
-      assert_equal ::RbColors::W3C.constants.size, 147
+      assert_equal 147, ::RbColors::W3C.constants.size
       assert ::RbColors::Primary::AQUA.equal? ::RbColors::Primary::AQUA
       each_palette_color(::RbColors::W3C)
     end
