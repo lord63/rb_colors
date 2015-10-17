@@ -1,6 +1,6 @@
 module RbColors
   class ColorPalette
-    def self.constants
+    def self.colors
       @colors.keys
     end
 
