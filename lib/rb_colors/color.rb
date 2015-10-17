@@ -1,5 +1,5 @@
 module RbColors
-  module Colorsys
+  module ColorSys
     def self.rgb_to_hsv(r, g, b)
       max_color = [r, g, b].max
       min_color = [r, g, b].min
@@ -136,7 +136,7 @@ module RbColors
     end
 
     def rgb
-      RGBColor.new(*(Colorsys.hsv_to_rgb(*to_a).map { |c| c * 255 }))
+      RGBColor.new(*(ColorSys.hsv_to_rgb(*to_a).map { |c| c * 255 }))
     end
 
     def hsv
@@ -163,7 +163,7 @@ module RbColors
     end
 
     def hsv
-      HSVColor.new(*(Colorsys.rgb_to_hsv(*(to_a.map { |c| c / 255.0 }))))
+      HSVColor.new(*(ColorSys.rgb_to_hsv(*(to_a.map { |c| c / 255.0 }))))
     end
   end
 

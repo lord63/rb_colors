@@ -11,27 +11,27 @@ class RbColorsTest < Minitest::Test
     refute_nil ::RbColors::VERSION
   end
 
-  class ColorsysTest < RbColorsTest
+  class ColorSysTest < RbColorsTest
     def test_rgb_to_hsv
       assert_equal([0.08333333333333331, 0.5, 0.4],
-                   ::RbColors::Colorsys.rgb_to_hsv(0.4, 0.3, 0.2))
+                   ::RbColors::ColorSys.rgb_to_hsv(0.4, 0.3, 0.2))
       assert_equal([0.5833333333333334, 0.5, 0.4],
-                   ::RbColors::Colorsys.rgb_to_hsv(0.2, 0.3, 0.4))
+                   ::RbColors::ColorSys.rgb_to_hsv(0.2, 0.3, 0.4))
       assert_equal([0.5, 0.5, 0.4],
-                   ::RbColors::Colorsys.rgb_to_hsv(0.2, 0.4, 0.4))
+                   ::RbColors::ColorSys.rgb_to_hsv(0.2, 0.4, 0.4))
     end
 
     def test_hsv_to_rgb
       assert_equal([0.36, 0.4, 0.2],
-                   ::RbColors::Colorsys.hsv_to_rgb(0.2, 0.5, 0.4))
+                   ::RbColors::ColorSys.hsv_to_rgb(0.2, 0.5, 0.4))
       assert_equal([0.2, 0.4, 0.2800000000000001],
-                   ::RbColors::Colorsys.hsv_to_rgb(0.4, 0.5, 0.4))
+                   ::RbColors::ColorSys.hsv_to_rgb(0.4, 0.5, 0.4))
       assert_equal([0.2, 0.4, 0.4],
-                   ::RbColors::Colorsys.hsv_to_rgb(0.5, 0.5, 0.4))
+                   ::RbColors::ColorSys.hsv_to_rgb(0.5, 0.5, 0.4))
       assert_equal([0.23999999999999988, 0.2, 0.4],
-                   ::RbColors::Colorsys.hsv_to_rgb(0.7, 0.5, 0.4))
+                   ::RbColors::ColorSys.hsv_to_rgb(0.7, 0.5, 0.4))
       assert_equal([0.4, 0.2, 0.31999999999999995],
-                   ::RbColors::Colorsys.hsv_to_rgb(0.9, 0.5, 0.4))
+                   ::RbColors::ColorSys.hsv_to_rgb(0.9, 0.5, 0.4))
     end
   end
 
