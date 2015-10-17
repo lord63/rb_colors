@@ -1,4 +1,5 @@
 module RbColors
+  # The ColorSys module is ported from python's colorsys module.
   module ColorSys
     def self.rgb_to_hsv(r, g, b)
       max_color = [r, g, b].max
@@ -129,7 +130,7 @@ module RbColors
     def initialize(h = 0, s = 0, v = 0)
       raise ArgumentError, 'Saturation has to be less than 1' if s > 1
       raise ArgumentError, 'Value has to be less than 1' if v > 1
-      h -= h.to_i if h >= 1 # Pardon???
+      h -= h.to_i if h >= 1 # Hue can safely circle around 1
       @hue = h
       @saturation = s
       @value = v
